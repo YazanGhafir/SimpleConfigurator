@@ -1,18 +1,22 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using SimpleConfiguratorBackend.Models.DAO;
 
 namespace SimpleConfiguratorBackend.Controllers
 {
     public class ValuesController : ApiController
     {
+
+        RulesDAO rulesDAO = new RulesDAO();
         // GET api/values
-        public IEnumerable<string> Get()
+        public IList Get()
         {
-            return new string[] { "value1", "value2" };
+            return rulesDAO.printRules();
         }
 
         // GET api/values/5
