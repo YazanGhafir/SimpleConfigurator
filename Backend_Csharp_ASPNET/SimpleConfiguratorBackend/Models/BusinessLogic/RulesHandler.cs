@@ -15,6 +15,7 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
         {
             this.Gdao = new GenericDAO();
             this.RuleList = FillUpRules();
+            Test3NestedConstraints(); //Comment out this line to test the 3 nested constraints
             CreateAllCostrins();
         }
 
@@ -23,7 +24,7 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
         {
             int ParentParam = Gdao.GetDisParamIdOfValueId(Value_id);
             int ParentRule = Gdao.GetDisRuleIdOfParamId(ParentParam);
-            IQueryable <DISALLOWED_PARAMETER> SiblingsParam= Gdao.GetParamWhoAreSiblingsInRule(ParentRule);
+            IQueryable<DISALLOWED_PARAMETER> SiblingsParam = Gdao.GetParamWhoAreSiblingsInRule(ParentRule);
             List<int> SiblingsInRule = new List<int>();
             List<int> DisallowedInValue = new List<int>();
             foreach (DISALLOWED_PARAMETER Sib_Param in SiblingsParam)
@@ -45,8 +46,8 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
         {
             public int Rule_id;
             public List<Parameter> ParamList;
-            public Rule(int Rule_id, List<Parameter> ParamList) 
-            { 
+            public Rule(int Rule_id, List<Parameter> ParamList)
+            {
                 this.Rule_id = Rule_id;
                 this.ParamList = ParamList;
             }
@@ -104,43 +105,122 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
             return (RuleToCheck.ParamList.Count == 2);
         }
 
-        void Create2ParamConstraints(Rule Rule_)
+        bool IsRuleOf3Pram(Rule RuleToCheck)
         {
-            foreach(Value V1 in Rule_.ParamList[0].ValueList)
-            {
-                foreach(Value V2 in Rule_.ParamList[1].ValueList)
-                {
-                    CreateSingleConstrain(V1.Val_id, V2.Val_id);
-                }
-            }
-
-            foreach (Value V1 in Rule_.ParamList[1].ValueList)
-            {
-                foreach (Value V2 in Rule_.ParamList[0].ValueList)
-                {
-                    CreateSingleConstrain(V1.Val_id, V2.Val_id);
-                }
-            }
+            return (RuleToCheck.ParamList.Count == 3);
         }
 
-        void CreateSingleConstrain(int V1_id, int V2_id)
+        public List<List<int>> Create2ParamConstraints(Rule Rule_)
         {
-            List<int> VList = new List<int>();
-            VList.Add(V1_id);
-            VList.Add(V2_id);
-            this.ConstraintsList.Add(VList);
+            return CreateSingleConstraintsBetween2Param(Rule_.ParamList[0].ValueList, Rule_.ParamList[1].ValueList);
         }
+
+
+        List<List<int>> Create3ParamConstraints(Rule Rule_)
+        {
+            return CreatedoubleConstraintsBetween3Param(
+                    Rule_.ParamList[0].ValueList,
+                    Rule_.ParamList[1].ValueList,
+                    Rule_.ParamList[2].ValueList
+                    );
+        }
+
+        List<List<int>> CreatedoubleConstraintsBetween3Param(List<Value> LV1, List<Value> LV2, List<Value> LV3)
+        {
+            List<List<int>> TmpdoubleConstraintsList = CreateSingleConstraintsBetween2Param(LV1, LV2);
+            List<List<int>> DoubleConstraintsList = new List<List<int>>();
+            foreach (Value V3 in LV3)
+            {
+                foreach (List<int> LV in TmpdoubleConstraintsList)
+                {
+                    LV.Add(V3.Val_id);
+                    List<int> TmpLV = new List<int>();
+                    TmpLV.AddRange(LV);
+                    DoubleConstraintsList.Add(TmpLV);
+                    LV.Remove(V3.Val_id);
+                }
+            }
+            return DoubleConstraintsList;
+        }
+
+        List<List<int>> CreateSingleConstraintsBetween2Param(List<Value> LV1, List<Value> LV2)
+        {
+            List<List<int>> Param2Constraints = new List<List<int>>();
+            foreach (Value V1 in LV1)
+            {
+                foreach (Value V2 in LV2)
+                {
+                    Param2Constraints.Add(CreateSingleConstrain(V1.Val_id, V2.Val_id));
+                }
+            }
+            return Param2Constraints;
+        }
+
+        List<int> CreateSingleConstrain(int V1_id, int V2_id)
+        {
+            return new List<int> { V1_id, V2_id };
+        }
+
 
         void CreateAllCostrins()
         {
+            this.ConstraintsList.Clear();
             foreach (Rule Rule_ in this.RuleList)
             {
                 if (IsRuleOf2Pram(Rule_))
                 {
-                    Create2ParamConstraints(Rule_);
+                    this.ConstraintsList.AddRange(Create2ParamConstraints(Rule_));
+                } else if (IsRuleOf3Pram(Rule_))
+                {
+                    this.ConstraintsList.AddRange(Create3ParamConstraints(Rule_));
                 }
             }
+
         }
-  
+
+
+        /*
+         * Tests the 3 nested contrains logic by adding such rules
+         * and see if they appear in the ConstraintsList in the 
+         * format they should
+         */
+        void Test3NestedConstraints()
+        {
+            this.RuleList.Add(new Rule
+                (5, new List<Parameter>()
+                {
+                    new Parameter (9, new List<Value>(){new Value(16), new Value(17), new Value(18)}),
+                    new Parameter (10, new List<Value>(){new Value(5), new Value(4)}),
+                    new Parameter (11, new List<Value>(){new Value(1), new Value(2)}),
+                }
+                ));
+        }
+
+        string[] res = new string[10];
+        public String[] test() { 
+            String[] arr = { "A", "B", "C", "D", "E", "F" };
+            combinations(arr, 3, 0, new String[3]);
+            foreach (var item in res)
+            {
+                System.Diagnostics.Debug.WriteLine(item.ToString());
+            }
+            
+            return arr;
+        }
+
+        void combinations(String[] arr, int len, int startPosition, String[] result)
+        {
+            if (len == 0)
+            {
+                res.Concat(result);
+                return;
+            }
+            for (int i = startPosition; i <= arr.Length - len; i++)
+            {
+                result[result.Length - len] = arr[i];
+                combinations(arr, len - 1, i + 1, result);
+            }
+        }
+
     }
 }

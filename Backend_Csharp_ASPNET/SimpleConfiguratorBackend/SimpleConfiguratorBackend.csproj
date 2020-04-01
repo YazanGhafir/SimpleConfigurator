@@ -162,6 +162,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Models\BusinessLogic\DataCombiner.cs" />
     <Compile Include="Models\BusinessLogic\RulesHandler.cs" />
     <Compile Include="Models\DAO\GenericDAO.cs" />
     <Compile Include="Models\DBGeneratedEntities\ConfiguratorDataModel.cs" />
