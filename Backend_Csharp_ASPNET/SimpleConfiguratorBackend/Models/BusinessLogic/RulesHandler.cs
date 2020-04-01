@@ -8,7 +8,7 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
 {
     public class RulesHandler
     {
-        GenericDAO Gdao;
+        private GenericDAO Gdao;
         public List<Rule> RuleList;
         public List<List<int>> ConstraintsList = new List<List<int>>();
         public RulesHandler()
@@ -19,28 +19,6 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
             CreateAllCostrins();
         }
 
-
-        public List<int> GetSiblingsInRule(int Value_id)
-        {
-            int ParentParam = Gdao.GetDisParamIdOfValueId(Value_id);
-            int ParentRule = Gdao.GetDisRuleIdOfParamId(ParentParam);
-            IQueryable<DISALLOWED_PARAMETER> SiblingsParam = Gdao.GetParamWhoAreSiblingsInRule(ParentRule);
-            List<int> SiblingsInRule = new List<int>();
-            List<int> DisallowedInValue = new List<int>();
-            foreach (DISALLOWED_PARAMETER Sib_Param in SiblingsParam)
-            {
-                SiblingsInRule.Add(Sib_Param.OBJECT_ID);
-            }
-            foreach (int Sib_Param_obj_id in SiblingsInRule)
-            {
-                DisallowedInValue.Add(Gdao.GetDisValueIdOfParamId(Sib_Param_obj_id));
-            }
-            return DisallowedInValue;
-        }
-
-        void pairRule(int value_id)
-        {
-        }
 
         public class Rule
         {
@@ -194,32 +172,6 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
                     new Parameter (11, new List<Value>(){new Value(1), new Value(2)}),
                 }
                 ));
-        }
-
-        string[] res = new string[10];
-        public String[] test() { 
-            String[] arr = { "A", "B", "C", "D", "E", "F" };
-            combinations(arr, 3, 0, new String[3]);
-            foreach (var item in res)
-            {
-                System.Diagnostics.Debug.WriteLine(item.ToString());
-            }
-            
-            return arr;
-        }
-
-        void combinations(String[] arr, int len, int startPosition, String[] result)
-        {
-            if (len == 0)
-            {
-                res.Concat(result);
-                return;
-            }
-            for (int i = startPosition; i <= arr.Length - len; i++)
-            {
-                result[result.Length - len] = arr[i];
-                combinations(arr, len - 1, i + 1, result);
-            }
         }
 
     }

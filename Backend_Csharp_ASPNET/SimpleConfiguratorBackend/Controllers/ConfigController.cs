@@ -12,15 +12,15 @@ namespace SimpleConfiguratorBackend.Controllers
         GenericDAO Gdao = new GenericDAO();
         RulesHandler RHandler = new RulesHandler();
         
-        public string[] Get(int id)
+        public List<List<int>> Get(int id)
         {
             //return RHandler.ConstraintsList;
-            return RHandler.test();
+            return RHandler.ConstraintsList;
         }
 
         public void Get()
         {
-            new DataCombiner().Main();
+            
         }
     }
 }
