@@ -15,5 +15,6 @@ namespace SimpleConfiguratorBackend
 
         [StringLength(50)]
         public string NAME { get; set; }
+
     }
 }

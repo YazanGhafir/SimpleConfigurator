@@ -6,7 +6,7 @@ namespace SimpleConfiguratorBackend
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class PARAMETER_VALUE
+    public partial class PARAMETER_VALUE 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -16,5 +16,6 @@ namespace SimpleConfiguratorBackend
 
         [StringLength(50)]
         public string NAME { get; set; }
+
     }
 }

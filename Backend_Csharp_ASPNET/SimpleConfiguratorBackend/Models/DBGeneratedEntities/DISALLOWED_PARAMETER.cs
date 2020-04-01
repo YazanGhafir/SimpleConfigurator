@@ -6,7 +6,7 @@ namespace SimpleConfiguratorBackend
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class DISALLOWED_PARAMETER
+    public partial class DISALLOWED_PARAMETER 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -15,5 +15,6 @@ namespace SimpleConfiguratorBackend
         public int DISALLOWED_RULE_ID { get; set; }
 
         public int PARAMETER_ID { get; set; }
+
     }
 }

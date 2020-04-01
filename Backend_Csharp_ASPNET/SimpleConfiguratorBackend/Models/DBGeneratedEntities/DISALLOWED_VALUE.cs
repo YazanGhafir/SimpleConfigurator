@@ -15,5 +15,6 @@ namespace SimpleConfiguratorBackend
         public int DISALLOWED_PARAMETER_ID { get; set; }
 
         public int PARAMETER_VALUE_ID { get; set; }
+
     }
 }

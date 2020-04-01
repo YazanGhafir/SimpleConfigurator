@@ -7,7 +7,7 @@ namespace SimpleConfiguratorBackend
     using System.Data.Entity.Spatial;
 
     [Table("PARAMETER")]
-    public partial class PARAMETER
+    public partial class PARAMETER 
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -17,5 +17,6 @@ namespace SimpleConfiguratorBackend
 
         [StringLength(50)]
         public string NAME { get; set; }
+
     }
 }
