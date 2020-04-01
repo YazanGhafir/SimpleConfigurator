@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
+using SimpleConfiguratorBackend.Models.BusinessLogic;
 using SimpleConfiguratorBackend.Models.DAO;
+using static SimpleConfiguratorBackend.Models.BusinessLogic.RulesHandler;
 
 namespace SimpleConfiguratorBackend.Controllers
 {
     public class ConfigController : ApiController
     {
-
-        GenericDAO gdao = new GenericDAO();
+        GenericDAO Gdao = new GenericDAO();
+        RulesHandler RHandler = new RulesHandler();
         
-        public PRODUCT Get(int id)
+        public List<List<int>> Get(int id)
         {
-            return gdao.find<PRODUCT>(id, "PRODUCT");
+            return RHandler.ConstraintsList;
         }
 
-        public List<PRODUCT> Get()
+        public List<DISALLOWED_VALUE> Get()
         {
-            return gdao.findAll<PRODUCT>("PRODUCT");
+            return Gdao.FindAll<DISALLOWED_VALUE>("DISALLOWED_VALUE");
         }
-
     }
 }
