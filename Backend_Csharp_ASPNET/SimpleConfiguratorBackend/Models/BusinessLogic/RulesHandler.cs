@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using SimpleConfiguratorBackend.Models.DAO;
 
 namespace SimpleConfiguratorBackend.Models.BusinessLogic
@@ -9,13 +6,15 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
     public class RulesHandler
     {
         private GenericDAO Gdao;
+
         public List<Rule> RuleList;
         public List<List<int>> ConstraintsList = new List<List<int>>();
+
         public RulesHandler()
         {
             this.Gdao = new GenericDAO();
             this.RuleList = FillUpRules();
-            Test3NestedConstraints(); //Comment out this line to test the 3 nested constraints
+            //Test3NestedConstraints(); Comment out this line to test the 3 nested constraints
             CreateAllCostrins();
         }
 

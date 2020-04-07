@@ -10,7 +10,7 @@ namespace SimpleConfiguratorBackend.Models.DAO
     public class GenericDAO
     {
         ConfiguratorDataModel cdm = new ConfiguratorDataModel();
-        public T FindByID<T> (int OBJECT_ID, string TableName)
+        public T FindByID<T>(int OBJECT_ID, string TableName)
         {
             return (T)cdm.getEntityManager(TableName).Find(OBJECT_ID);
         }
@@ -64,8 +64,8 @@ namespace SimpleConfiguratorBackend.Models.DAO
 
         public List<int> GetParamsofRule(int Rule_id)
         {
-            IQueryable<int> ParamObjectIDs = from a 
-                                             in cdm.DISALLOWED_PARAMETER 
+            IQueryable<int> ParamObjectIDs = from a
+                                             in cdm.DISALLOWED_PARAMETER
                                              where a.DISALLOWED_RULE_ID == Rule_id
                                              select a.OBJECT_ID;
             return ParamObjectIDs.ToList();
@@ -74,11 +74,48 @@ namespace SimpleConfiguratorBackend.Models.DAO
         public List<int> GetValuesOfParams(int Param_id)
         {
             IQueryable<int> Value_id = from a
-                                             in cdm.DISALLOWED_VALUE
-                                             where a.DISALLOWED_PARAMETER_ID == Param_id
-                                             select a.PARAMETER_VALUE_ID;
+                                       in cdm.DISALLOWED_VALUE
+                                       where a.DISALLOWED_PARAMETER_ID == Param_id
+                                       select a.PARAMETER_VALUE_ID;
             return Value_id.ToList();
         }
 
+        public Dictionary<string, Dictionary<int, string>> getParameters()
+        {
+            Dictionary<string, Dictionary<int, string>> ParametersDict = new Dictionary<string, Dictionary<int, string>>();
+            IQueryable<TableObject> Parameters = from a
+                                                      in cdm.PARAMETER
+                                                      select (new TableObject { OBJECT_ID = a.OBJECT_ID, NAME = a.NAME });
+            foreach (TableObject p in Parameters)
+            {
+                ParametersDict.Add(p.NAME, getParameterValueDict(p.OBJECT_ID));
+            }
+            return ParametersDict;
+        }
+
+        public Dictionary<int, string> getParameterValueDict(int Parameter_ID)
+        {
+            Dictionary<int, string> ParameterValuesDic = new Dictionary<int, string>();
+            IQueryable<TableObject> ParameterValues = from a
+                                                            in cdm.PARAMETER_VALUE
+                                                            where a.PARAMETER_ID == Parameter_ID
+                                                            select (new TableObject { OBJECT_ID = a.OBJECT_ID, NAME = a.NAME });
+            foreach (TableObject pv in ParameterValues)
+            {
+                ParameterValuesDic.Add(pv.OBJECT_ID, pv.NAME);
+            }
+            return ParameterValuesDic;
+        }
+
+        public class Param
+        {
+            public int OBJECT_ID;
+            public string NAME;
+        }
+        public class TableObject
+        {
+            public int OBJECT_ID;
+            public string NAME;
+        }
     }
 }
