@@ -21,8 +21,10 @@ export default class ListGroupingItem extends Component {
                             radio_name={pv} 
                             radio_id={this.props.parameter_values_keys[j++]} 
                             key={idx} 
-                            check_all={this.props.check_all}  
-                            marked_radios={this.props.marked_radios}/> })}
+                            ParameterValues = {this.props.ParameterValues}
+                            marked_radios={this.props.marked_radios}
+                            ConstraintsList={this.props.ConstraintsList}/> })}
+                            
                     </Col>
                     </Form.Group>
                 </fieldset>

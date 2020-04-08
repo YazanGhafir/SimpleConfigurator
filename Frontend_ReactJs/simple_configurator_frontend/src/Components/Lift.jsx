@@ -4,7 +4,6 @@ import Form from 'react-bootstrap/Form'
 
 export default class Lift extends Component {
 
-
     constructor(props) {
         super(props);
         this.state = { 
@@ -13,21 +12,6 @@ export default class Lift extends Component {
             ConstraintsList : [],
             marked_radios : []
         };
-    }
-
-    check_all(){
-            // clear marked_radios, add all the pressed radios to it on each klick
-            // do the 2 constraints checks
-            // do the 3 constraints checks
-
-
-            // ideas:
-            // add last clicked element to the state and pass it
-            // add event listener on the last clicked element
-    }
-
-    check_marked_duplicates(){
-
     }
 
     componentDidMount() {
@@ -43,7 +27,6 @@ export default class Lift extends Component {
     }
     
     render() {
-        
         console.log(this.state);
         var i = 0;
         return (
@@ -55,8 +38,9 @@ export default class Lift extends Component {
                         parameter_values_keys={Object.keys(this.state.ParameterValues[i])} 
                         parameter_values_values={Object.values(this.state.ParameterValues[i++])} 
                         key={idx} 
-                        check_all={this.check_all} 
-                        marked_radios={this.state.marked_radios}/> })}
+                        ParameterValues = {this.state.ParameterValues}
+                        marked_radios={this.state.marked_radios}
+                        ConstraintsList={this.state.ConstraintsList}/> })}
                 </Form>
             </div>
         )
