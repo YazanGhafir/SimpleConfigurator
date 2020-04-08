@@ -14,7 +14,11 @@ namespace SimpleConfiguratorBackend.Models.BusinessLogic
         {
             this.Gdao = new GenericDAO();
             this.RuleList = FillUpRules();
-            //Test3NestedConstraints(); Comment out this line to test the 3 nested constraints
+
+            //Comment out this line to test the 3 nested constraints. 
+            // You can see that they are sent to the frontend with the
+            // constraints by navigating to 
+            //Test3NestedConstraints();   
             CreateAllCostrins();
         }
 
