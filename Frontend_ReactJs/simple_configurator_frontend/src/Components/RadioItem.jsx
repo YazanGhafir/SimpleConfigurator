@@ -9,7 +9,7 @@ export default class RadioItem extends Component {
                     custom
                     type="radio"
                     label={this.props.radio_name}
-                    name={this.props.radio_name}
+                    name={this.props.param_name}
                     id={this.props.radio_id}
                 />
             </div>
