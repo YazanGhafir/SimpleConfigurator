@@ -34,7 +34,7 @@ function App() {
           </Row>
         </Container>
 
-        <Container fluid={true} style={{ paddingLeft: 0, paddingRight: 0 }}>
+        <Container fluid={true} style={{ paddingLeft: 0, paddingRight: 0,  marginTop: '10%'}}>
           <BrowserRouter>
             <Footer />
           </BrowserRouter>

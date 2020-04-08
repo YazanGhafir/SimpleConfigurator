@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import ListGroupingItem from './ListGroupingItem';
+import Form from 'react-bootstrap/Form'
 
 export default class Lift extends Component {
 
@@ -7,7 +9,9 @@ export default class Lift extends Component {
         super(props);
         this.state = { 
             Parameters : [],
-            ConstraintsList : []
+            ParameterValues : [],
+            ConstraintsList : [],
+            marked_radios : []
         };
     }
 
@@ -17,7 +21,8 @@ export default class Lift extends Component {
             .then(res => res.json())
             .then((data) => {
                 this.setState({ 
-                    Parameters : data.Parameters,
+                    Parameters : Object.keys(data.Parameters),
+                    ParameterValues : Object.values(data.Parameters),
                     ConstraintsList : data.ConstraintsList
                 });
             }).catch(console.log);
@@ -25,10 +30,16 @@ export default class Lift extends Component {
     
     render() {
         console.log(this.state);
+        var i = 0;
         return (
             <div>
-                
+               <Form>
+                    {this.state.Parameters.map((p, idx) => { return <ListGroupingItem parameter_name={p} parameter_values_keys={Object.keys(this.state.ParameterValues[i])} parameter_values_values={Object.values(this.state.ParameterValues[i++])} key={idx} /> })}
+                </Form>
             </div>
         )
     }
 }
+/**
+ *              
+ */
