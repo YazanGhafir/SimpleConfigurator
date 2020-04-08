@@ -15,12 +15,17 @@ export default class ListGroupingItem extends Component {
                         {this.props.parameter_name}
                     </Form.Label>
                     <Col sm={10} >
-                        {this.props.parameter_values_values.map((pv, idx) => {return <RadioItem param_name={this.props.parameter_name} radio_name={pv} radio_id={this.props.parameter_values_keys[j++]} key={idx} /> })}
+                        {this.props.parameter_values_values.map((pv, idx) => {
+                            return <RadioItem 
+                            param_name={this.props.parameter_name} 
+                            radio_name={pv} 
+                            radio_id={this.props.parameter_values_keys[j++]} 
+                            key={idx} 
+                            check_all={this.props.check_all}  
+                            marked_radios={this.props.marked_radios}/> })}
                     </Col>
                     </Form.Group>
                 </fieldset>
-
-
                 </div>
             
         )

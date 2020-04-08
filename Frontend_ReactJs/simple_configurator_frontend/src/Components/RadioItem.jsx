@@ -11,6 +11,7 @@ export default class RadioItem extends Component {
                     label={this.props.radio_name}
                     name={this.props.param_name}
                     id={this.props.radio_id}
+                    onClick={ ()=> {this.props.marked_radios.push(this.props.param_name + '_' + this.props.radio_id); this.props.check_all(); console.log(this.props.marked_radios);}}
                 />
             </div>
         )
