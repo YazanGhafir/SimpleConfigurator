@@ -1,5 +1,5 @@
 # SimpleConfigurator
-Automated Configurator project. The frontend is developed on React.js. The backend is developed on ASP.NET. 
+Automated Configurator project with React.js frontend and ASP.NET backend. 
 
 ![Feature Model](Documentation/FeatureModel.png "Product Feature Model")
 
@@ -94,4 +94,15 @@ The project is developed in an object-oriented manner as 2 different microservic
   Object-oriented principle SRP is clearly followed. Additionally No circular dependencies.
   ## Extra-task
   The program now is able to solve constraints with 2 and 3 parameters. I thought of that it may not be so often one get more than 3 mutually excluded parameters. The handling of 3 parameters is done in both the backend and the frontend.  
+  
+  # Feature Modeling - Domain Engineering
+  This type of systems fits well feature modelling. I drew the feature model using eclipse Feature-IDE to visualize the features. It could be beneficial for large configurators with many features to do domain engineering on the feature model. As part of the domain analysis, one can express all the constraints as a (disallowed rules/parameters/values) as a Propositional Formula then convert it ti conjuction normal form CNF. After that convert it to DIMACS then using a SAT-solver one could do the following: **find dead features** and create a **dependency graph**. 
+  
+  I would gladly do it if I would get paid for it :)
+  
+  One of my cources at Chalmers was Software Engineering Principles of Complex Systems, and there we did domain engineering as a first step then we built a software product line in form of framework that behaves as an automation configurator that the stake holders just choose there features of the software and the platform creates the entire software with the chosen features using the reuasable assets and the framwork, directly without any need of manual programming. 
+
+Here is a link to the final report of the project that I did in this cource if you are interested. I did more than 90% of the project and the report then.
+https://drive.google.com/file/d/1l6Jn8ekH1xGmF6c_qHBTl2nLnPagM6N8/view?usp=sharing
+
 
