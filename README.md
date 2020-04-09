@@ -13,8 +13,8 @@ The project is developed in an object-oriented manner as 2 different microservic
     - CORS is enabled exclusivly for the frontend origin with port 3000. 
   - Model
     - Entities: generated classes from the given database, handled by using ConfiguratorDataModel class that has object of all of these entities.
-    - Buisness logic: Here the data of the products and there parameters as well as the rules and there parameters are gathered and formed in a way that maximizes the performance of handling it by the frontend.
-      - RulesHandler: The most interesting part, this class uses GenericDAO and models the rules, parameters and values to inner classes and form them to constraints with 2 parameters or with 3 parameters in a way that make it easy and with high performance to handle the data in the frontend. 
+    - Business logic: Here the data of the products and their parameters as well as the rules and their parameters are gathered and formed in a way that maximizes the performance of handling it by the frontend.
+      - RulesHandler: The most interesting part, this class uses GenericDAO and models the rules, parameters and values to inner classes and forms them to constraints with 2 parameters or with 3 parameters in a way that make it easy and with high performance to handle the data in the frontend. 
       - ProductHandler: uses GenericDAO to gather the data of the parameters saved in Dictionary<string, Dictionary<int, string>> Parameters;
       - DataToSend: has both 
       ```
@@ -23,7 +23,7 @@ The project is developed in an object-oriented manner as 2 different microservic
       ```
       which will be converted to Json object and sent as a response to the frontend call via the endpoint in the controller.
       
-      The sended data has the following form:
+      The sent data has the following form:
       ```
       {
         "Parameters": {
@@ -68,13 +68,13 @@ The project is developed in an object-oriented manner as 2 different microservic
           ]
         }
         ```
-        The each sublist of length 2 in ConstraintsList indicates to the frontend that its elements are mutually exclusive. For example, [2,5] says that the fifth radio button must be disabled when the second one is marked and vice versa.
+        The each sublist of length 2 in ConstraintsList indicates to the frontend that its elements are mutually excluded. For example, [2,5] says that the fifth radio button must be disabled when the second one is marked and vice versa.
   - DAO
-    - GenericDAO is part of Model package but is sperated in its functionality from the entities.
-    - Its main work is to handle the data base and provide the buisness logic classes the needed data from the data base by proper functionality.
+    - GenericDAO is part of Model package but is separated in its functionality from the entities.
+    - Its main work is to handle the data base and provide the business logic classes the needed data from the data base by proper functionality.
 
 ## Frontend
-  - Single page application design where the pages shares the nav-bar and the footer.
+  - Single page application design where the pages share the nav-bar and the footer.
   - The routing is done centrally and relativly in App.js
   - The code is written as components and composite componenets.
   - The main-page shows the product alternatives using React Material Design cards.
@@ -82,9 +82,16 @@ The project is developed in an object-oriented manner as 2 different microservic
   - The Containers are flexboxes using React Bootstrap.
   - When you click on Lift, then Lift-component sends get request to the backend to get the data and save it in its state. 
   - Lift-component loopes over the gotten parameters and creates ListGroupItem component for each one that render the title of the radio-buttons-block.
-  - Each ListGroupItem component creates RadioItem component that render shows the radio buttons with there lables.
+  - Each ListGroupItem component creates RadioItem component that render shows the radio buttons with there labels.
   
   
-  # The power-points of the project
-
+  # The project's strengths 
+  ## Scalability and automation
+  You can now simply just extend the database with arbitrary number parameters to build radio buttons for and constraines in form of disallowed-rules, and the application will render them automatically and do all the checks automatically without adding one if statement or any row of code.
+  ##  Performance
+  The frontend is fetching the database through the backend **just one time** when a product will be reviewed, and all the checks are done locally based on the constraintsList that is sent from the backend in form of small arrays that also enhances the performance of reading from and handling the constraints. 
+  ##  Separation of concerns 
+  Object-oriented principle SRP is clearly followed. Additionally No circular dependencies.
+  ## Extra-task
+  The program now is able to solve constraints with 2 and 3 parameters. I thought of that it may not be so often one get more than 3 mutually excluded parameters. The handling of 3 parameters is done in both the backend and the frontend.  
 
